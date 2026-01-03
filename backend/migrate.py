@@ -22,5 +22,5 @@ conn.commit()
 cur.close()
 conn.close()
 
-print("Database migration completed")
+print("Database migration completed1")
 
