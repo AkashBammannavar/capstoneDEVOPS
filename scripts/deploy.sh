@@ -1,26 +1,25 @@
 #!/bin/bash
 
-echo "🔹 Starting staging deployment..."
+echo "=============================="
+echo "🚀 Deploying to STAGING"
+echo "=============================="
 
-# Stop old containers
-echo "Stopping old containers..."
-docker-compose -f docker-compose.staging.yml down
+echo "🔹 Pull latest Docker images"
+docker compose -f docker-compose.staging.yml pull
 
-# Pull latest images
-echo "Pulling latest images..."
-docker-compose -f docker-compose.staging.yml pull
+echo "🔹 Stop old containers"
+docker compose -f docker-compose.staging.yml down
 
-# Start containers
-echo "Starting new containers..."
-docker-compose -f docker-compose.staging.yml up -d
+echo "🔹 Start new containers"
+docker compose -f docker-compose.staging.yml up -d
 
-# Run DB migration
-echo "Running database migrations..."
+echo "🔹 Wait for services to be ready"
+sleep 10
+
+echo "🔹 Run database migrations"
 docker exec backend_staging python migrate.py
 
-# Verify deployment
-echo "Verifying deployment..."
-sleep 10
-curl http://localhost:5001/health
+echo "🔹 Verify deployment"
+curl http://localhost:5001/health || exit 1
 
-echo "✅ Deployment successful!"
+echo "✅ Deployment to STAGING successful"
