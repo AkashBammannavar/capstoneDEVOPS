@@ -46,7 +46,7 @@ pipeline {
             steps {
                 echo "🔑 Logging in to Docker Hub"
                 withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-creds',
+                    credentialsId: 'dockerhub-jenkins',
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
